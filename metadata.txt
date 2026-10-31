@@ -1,0 +1,25 @@
+[general]
+name=GeoCad
+qgisMinimumVersion=3.0
+qgisMaximumVersion=4.99
+description=Precision Land Surveying & Cadastral CAD Suite: Lot Traverse Plotter, Field Coordinate Ingestion, Boundary Bearing & Distance Annotation, Survey Grids, TIN Surfaces, and Contours.
+about=GeoCad is an enterprise-grade Land Surveying, Cadastral, and Civil Engineering CAD Workbench for QGIS. It implements the complete survey-production toolset: (1) Lot Traverse Plotting with tie-line geometry, closure diagnostics, OCR extraction, and multi-format CSV import. (2) Coordinate Point Ingestion (NEZL, NEL, NEZ, NE, PNEZL, KDMS) with sequential boundary string joining (seqline). (3) Boundary Bearing and Distance Annotation in Meters (m) and Feet (') with automatic upside-down text flipping. (4) Cartographic Survey Grid generation with collar coordinates and tick marks. (5) Delaunay TIN Surface modeling with 3D area and slope analytics. (6) Topographic Contour generation with cubic spline smoothing and hypsometric tinting. (7) Modular QGIS Processing Provider.
+version=1.0.0
+author=GeoCad
+email=geocad@example.com
+category=Vector
+tags=cad, surveying, cadastral, lot plotter, traverse, bearing, distance, boundary, coordinate grid, tin, surface, contours, total station, gps, geodesy
+icon=icon.png
+hasProcessingProvider=yes
+experimental=False
+deprecated=False
+changelog=1.0.0:
+  - Initial Release of GeoCad.
+  - Complete Lot Traverse Plotter with OCR table review, image upload, clipboard paste, tie line geometry, and closure metrics.
+  - Multi-format CSV and coordinate importer.
+  - Field Coordinate Importer with sequential boundary connection (seqline).
+  - Surveyor Bearing & Distance Annotation (Meters & Feet) with 8 placement modes.
+  - Cartographic Survey Grid Generator with border collar coordinates.
+  - Delaunay TIN Surface Modeler and 3D terrain metrics report.
+  - Topographic Contour Generator with spline smoothing and hypsometric tinting.
+  - Native QGIS Processing Provider 'geocad' with 6 modular algorithms.
