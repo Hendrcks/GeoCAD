@@ -1,20 +1,20 @@
 # GeoCad — Professional Land Surveying & Cadastral CAD Suite for QGIS
 
-## 1. Overview
-[![QGIS Compatibility](https://img.shields.io/badge/QGIS-3.0%20%E2%80%94%204.x-brightgreen.svg)](https://qgis.org)
+[![QGIS Compatibility](https://img.shields.io/badge/QGIS-3.0.0%20%E2%80%94%204.9.9-brightgreen.svg)](https://qgis.org)
 [![Python Version](https://img.shields.io/badge/Python-3.9%20%7C%203.10%20%7C%203.11%20%7C%203.12-blue.svg)](https://python.org)
+[![GitHub Repository](https://img.shields.io/badge/GitHub-Hendrcks%2FGeoCAD-181717.svg?logo=github)](https://github.com/Hendrcks/GeoCAD.git)
 [![License](https://img.shields.io/badge/License-GPL%20v2%2B-orange.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
-[![Version](https://img.shields.io/badge/Release-v1.0.0-green.svg)](metadata.txt)
+[![Version](https://img.shields.io/badge/Release-v2.0.0-green.svg)](GeoCad/metadata.txt)
 
-**GeoCad** is an enterprise-grade Land Surveying, Cadastral Lot Plotting, and Digital Terrain Modeling (DTM) CAD Workbench for QGIS Desktop. Modernized for QGIS 3 and QGIS 4, GeoCad provides a unified, production-tested CAD workflow directly inside your GIS environment.
-**GeoCad** is an enterprise-grade Land Surveying, Cadastral Lot Plotting, and Digital Terrain Modeling (DTM) CAD Workbench built natively for **QGIS 3** and **QGIS 4** (Qt5 and Qt6). It provides a complete, surveyor-grade desktop workflow directly inside your GIS environment without requiring expensive proprietary CAD software.
+**GeoCad** is an enterprise-grade Land Surveying, Cadastral Lot Plotting, and Digital Terrain Modeling (DTM) CAD Workbench built natively for **QGIS 3.0.0 to 4.9.9** (Qt5 and Qt6). It provides a complete, surveyor-grade desktop workflow directly inside your GIS environment without requiring expensive proprietary CAD software.
 
-Whether you are plotting cadastral titles from technical descriptions, importing field points from total stations/RTK-GNSS, labeling boundaries with surveyor bearings and distances, generating cartographic coordinate grids, or modeling 3D TIN surfaces and topographic contours, **GeoCad** delivers surveyor-grade precision without requiring expensive CAD licenses.
 Whether you are plotting cadastral titles from technical descriptions, importing field points from total stations/RTK-GNSS, labeling boundaries with surveyor bearings and distances, generating cartographic coordinate grids, or modeling 3D TIN surfaces and topographic contours, **GeoCad** delivers millimeter-level precision and full compatibility with local and global geodetic reference frames.
+
+- **GitHub Repository**: [https://github.com/Hendrcks/GeoCAD.git](https://github.com/Hendrcks/GeoCAD.git)
+- **Supported QGIS Versions**: `QGIS 3.0.0` through `QGIS 4.9.9` (Multi-Profile Compatible)
 
 ---
 
-## 2. Key Modules & Capabilities
 ## Architecture Overview
 
 ```
@@ -43,32 +43,13 @@ Whether you are plotting cadastral titles from technical descriptions, importing
          └─────────────────┘   └─────────────────┘
 ```
 
-### 2.1. Lot Traverse Plotter (Bearing & Distance)
-- **Direct Technical Description Entry**: Input cadastral lots station by station (`From`, `To`, `Bearing`, `Distance`).
-- **Multi-Source Ingestion**:
-  - **Upload Image (OCR)**: Scans title images, plans, and technical descriptions with built-in OCR.
-  - **Paste (Image / Text)**: Seamlessly ingests clipboard text or screenshot clips from Windows Snipping Tool.
-  - **Import CSV...**: Intelligently parses cadastral CSVs, GeoCad export files, and coordinate point datasets.
-- **Tie-Line Calculator**: Accurately computes Station 1 starting coordinates $(E, N)$ from a reference control monument using tie bearing and distance.
-- **Closure Error & Diagnostics**: Automatically calculates Easting/Northing misclosure ($c_E, c_N$), linear misclosure distance, closure direction, and relative precision ratio ($1:N$).
-- **Bowditch Adjustment (Compass Rule)**: Distributes angular and distance misclosure proportionally across traverse perimeter.
 ---
 
-### 2.2. Coordinate Point Plotting (`seqline`)
-- Support for P,N,E,Z,L, NEL, NEZL, and KDMS field files.
-- Sequential line joining for boundary traverses.
 ## 1. Key Modules & Capabilities
 
-### 2.3. Boundary Bearing & Distance Annotation
-- 8 standard placement modes (LR, RL, LL, RR, BL, BR, DL, DR).
-- Distance units in Meters (m) or Feet (').
-- Automatic text flipping to ensure annotations are never upside down.
 ### 1.1. Lot Traverse Plotter (Bearing & Distance)
 Constructs closed cadastral boundaries from legal title technical descriptions and traverse tables.
 
-### 2.4. Cartographic Survey Grids
-- Full grid lines or cross tic marks.
-- Margin collar coordinate annotations with custom units and clearance.
 - **Quadrant & Azimuth Bearing Parsing**: Parses all standard surveyor bearing representations:
   - Quadrant: `N 28°38' E`, `S 80°56' E`, `S 16°35' W`, `N 65°06' W`
   - Shorthand: `N28-38E`, `S80.56E`, `S 16 35 W`, `N28.6333E`
@@ -78,7 +59,7 @@ Constructs closed cadastral boundaries from legal title technical descriptions a
   - **Paste (Image / Text)**: Directly grabs copied table text or screenshot clips from the Windows Snipping Tool (`Ctrl+V`).
   - **Import CSV...**: Intelligently auto-detects cadastral CSV files, GeoCad export tables, and coordinate point datasets.
 - **Interactive OCR Review Dialog**: Verifies raw extracted text side-by-side with recognized traverse legs before committing to canvas.
-- **Automated Tie Point Computation**: Computes Station 1 starting coordinates $(E_1, N_1)$ from a reference control monument (e.g., BLLM No. 1, MBM, BBM) via tie bearing and distance:
+- **Automated Tie Point Computation & International Benchmark Manager**: Computes Station 1 starting coordinates $(E_1, N_1)$ from any geodetic control monument or benchmark (saved locally, imported via CSV, or queried from active QGIS Point layers) via tie bearing and distance:
   $$E_1 = E_{\text{ref}} + d_{\text{tie}} \cdot \sin(\theta_{\text{tie}})$$
   $$N_1 = N_{\text{ref}} + d_{\text{tie}} \cdot \cos(\theta_{\text{tie}})$$
 - **Traverse Closure Diagnostics**: Computes linear error of closure, misclosure bearing, and precision ratio ($1:N$):
@@ -90,14 +71,8 @@ Constructs closed cadastral boundaries from legal title technical descriptions a
   - `GeoCad - Lot Vertices`: Point layer with numbered station labels (`Corner 1`, `Corner 2`, ...).
   - `GeoCad - Tie Line`: Distinct dashed line connecting the control monument to Corner 1.
 
-### 2.5. Delaunay TIN Surface Modeler
-- 3D triangulation and terrain modeling.
-- Surface area and slope analysis.
 ---
 
-### 2.6. Topographic Contour Generator
-- Regular and index contours with elevation labeling.
-- Spline smoothing and hypsometric elevation tinting.
 ### 1.2. Field Coordinate Point Ingestion & Sequential Boundaries (`seqline`)
 Plots total station, RTK-GNSS, and raw coordinate survey files directly onto the QGIS canvas.
 
@@ -189,15 +164,19 @@ All core algorithms are exposed directly inside the **QGIS Processing Toolbox** 
 ## 2. Installation & Quick Setup
 
 ### Method 1: Install from ZIP in QGIS (Recommended)
-1. Download **`GeoCad.zip`** from this repository.
-2. Open **QGIS Desktop** (version 3.22 or higher, including QGIS 4.x).
+1. Download **`GeoCad.zip`** from [https://github.com/Hendrcks/GeoCAD/releases](https://github.com/Hendrcks/GeoCAD.git).
+2. Open **QGIS Desktop** (version 3.0.0 through 4.9.9).
 3. In the menu bar, navigate to **Plugins** → **Manage and Install Plugins...**
 4. Click on the **Install from ZIP** tab on the left.
 5. Browse to `GeoCad.zip` and click **Install Plugin**.
 6. The **GeoCad** toolbar icon and **Vector** menu entries will appear immediately.
 
-### Method 2: Manual Directory Installation
-Copy the unzipped `GeoCad` directory directly into your QGIS plugins folder:
+### Method 2: Clone or Copy to QGIS Plugins Directory
+Clone the repository directly into your active QGIS profile plugin path:
+
+```bash
+git clone https://github.com/Hendrcks/GeoCAD.git
+```
 
 - **Windows (QGIS 4)**:
   ```powershell
@@ -224,8 +203,8 @@ Copy the unzipped `GeoCad` directory directly into your QGIS plugins folder:
 1. Click the **GeoCad Workbench** icon on the toolbar.
 2. On Tab 1 (**Lot Plotter**):
    - Enter **Lot No.** (e.g. `LOT 1`) and optional declared area.
-   - Select your **Target CRS** (e.g., `EPSG:3124 - PRS92 / Philippines Zone 4` or your local UTM projection).
-   - Under **Coordinate System**, enter the reference control coordinates (e.g., BLLM No. 1) along with the **Tie Bearing** and **Tie Distance** to Corner 1.
+   - Select your **Target CRS** (defaults automatically to your active QGIS Project CRS, or pick any international UTM / National Grid EPSG code such as `EPSG:32630`).
+   - Under **Coordinate System**, choose **Grid**, **Plane**, **Control**, or **Select on Map**, enter your reference point Easting & Northing (or click **Search Control Point...** to search saved benchmarks, CSV catalogs, or active QGIS point layers), and optionally add a **Tie Bearing** and **Tie Distance** to Corner 1.
 3. In the traverse table:
    - Click **Upload Image (OCR)** to upload a photo/scan of your technical description, OR
    - Copy the technical description table to your clipboard and click **Paste (Image / Text)**, OR
@@ -262,7 +241,7 @@ pnt_result = processing.run("geocad:plot_points", {
     'DELIMITER': 0,        # Auto-detect
     'SEQUENTIAL_LINES': True,
     'PREFIX_LENGTH': 2,
-    'TARGET_CRS': 'EPSG:3124',
+    'TARGET_CRS': 'EPSG:32630',
     'OUTPUT_POINTS': 'memory:',
     'OUTPUT_LINES': 'memory:'
 })
@@ -324,7 +303,9 @@ GeoCad/
 
 ## 6. License & Credits
 
-- **Author**: GeoCad Development Team
-- **Email**: `geocad@example.com`
+- **Repository**: [https://github.com/Hendrcks/GeoCAD.git](https://github.com/Hendrcks/GeoCAD.git)
+- **Author**: Ariesplus Geospatial Solutions
+- **Email**: [ariesplusgeo@gmail.com](mailto:ariesplusgeo@gmail.com)
 - **License**: GNU General Public License v2.0 or later (GPL-2.0-or-later)
 - **Built for**: Surveyors, Civil Engineers, Cadastral Agencies, and GIS Specialists worldwide.
+
